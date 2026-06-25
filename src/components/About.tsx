@@ -5,7 +5,7 @@ export const About = () => {
         <h2 className="font-display text-[30px] font-bold leading-[1.2]">About</h2>
         <div>
           <p className="text-[17px] text-ink-soft mb-[18px] max-w-[600px]">
-            I'm a <strong className="text-ink font-semibold">Computer Science student at the University of Lahore</strong> (4th semester) and a working frontend/Shopify developer. I split my time between client work — building and maintaining storefronts like <strong className="text-ink font-semibold">Imrozia Serene</strong> — and my own products, like <strong className="text-ink font-semibold">MAEVEN</strong> and <strong className="text-ink font-semibold">ProposalCraft</strong>.
+            I'm a <strong className="text-ink font-semibold">Computer Science student at the University of Lahore</strong> (6th semester) and a working frontend/Shopify developer. I split my time between client work — building and maintaining storefronts like <strong className="text-ink font-semibold">Imrozia Serene</strong> — and my own products, like <strong className="text-ink font-semibold">MAEVEN</strong> and <strong className="text-ink font-semibold">ProposalCraft</strong>.
           </p>
           <p className="text-[17px] text-ink-soft max-w-[600px]">
             I care about shipping things that work in production, not just things that look good in a portfolio.
