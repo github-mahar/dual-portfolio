@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahar GM — Frontend & Shopify Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAFAF8;
+    --paper-dim: #F1EFE9;
+    --ink: #17160F;
+    --ink-soft: #5C5A4F;
+    --line: #E3E0D6;
+    --clay: #C75D3B;
+    --clay-dim: #F3E2DC;
+    --sage: #6F7F5F;
+    --sage-dim: #E6EADF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Archivo', sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 250, 248, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 19px;
+  }
+  .logo span { color: var(--clay); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.15s ease;
+  }
+  .nav-cta:hover { background: var(--clay); }
+  .nav-toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 110px 0 90px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 40px;
+    align-items: start;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--clay);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--clay);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 800;
+    line-height: 1.03;
+    margin-bottom: 26px;
+  }
+  .hero h1 .name { display: block; color: var(--ink-soft); font-weight: 600; font-size: 0.42em; margin-bottom: 14px; letter-spacing: 0; }
+  .hero .lede {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin-bottom: 38px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14.5px;
+    transition: all 0.15s ease;
+    border: 1.5px solid transparent;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--clay); }
+  .btn-ghost { border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-text { color: var(--ink-soft); font-weight: 500; }
+  .btn-text:hover { color: var(--clay); }
+
+  /* hero side rail — the structural "two disciplines" device */
+  .hero-rail {
+    border-left: 1.5px solid var(--line);
+    padding-left: 24px;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .rail-item .mono {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .rail-item .rail-tag {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .rail-item:nth-child(1) .rail-tag { color: var(--clay); }
+  .rail-item:nth-child(2) .rail-tag { color: var(--sage); }
+
+  /* ---------- SERVICES ---------- */
+  .services {
+    padding: 70px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-dim);
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .service-col {
+    padding: 8px 40px;
+  }
+  .service-col:first-child {
+    border-right: 1px solid var(--line);
+  }
+  .service-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 5px 11px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .tag-shopify { background: var(--clay-dim); color: var(--clay); }
+  .tag-web { background: var(--sage-dim); color: var(--sage); }
+  .service-col h3 {
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .service-col p {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+
+  /* ---------- WORK ---------- */
+  .work {
+    padding: 100px 0 60px;
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 50px;
+  }
+  .section-head h2 {
+    font-size: 34px;
+    font-weight: 700;
+  }
+  .section-head .mono {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .lane-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+  .lane-label .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .lane-label.shopify .dot { background: var(--clay); }
+  .lane-label.web .dot { background: var(--sage); }
+  .lane-label span.mono {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  .lanes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 26px;
+    margin-bottom: 22px;
+    background: var(--paper);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+  }
+  .lane-shopify .card:hover { border-color: var(--clay); }
+  .lane-web .card:hover { border-color: var(--sage); }
+
+  .card-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .card h4 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .card p {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 9px;
+    border-radius: 3px;
+    background: var(--paper-dim);
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+  .card-link {
+    font-size: 13.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .lane-shopify .card-link { color: var(--clay); }
+  .lane-web .card-link { color: var(--sage); }
+
+  /* ---------- ABOUT ---------- */
+  .about {
+    padding: 90px 0;
+    border-top: 1px solid var(--line);
+  }
+  .about .wrap {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 60px;
+  }
+  .about h2 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .about-body p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    max-width: 600px;
+  }
+  .about-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- STACK ---------- */
+  .stack {
+    padding: 60px 0;
+    border-top: 1px solid var(--line);
+    background: var(--paper-dim);
+  }
+  .stack .wrap {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .stack .mono.label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+  .stack-items {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+  .stack-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact {
+    padding: 110px 0 100px;
+    text-align: center;
+  }
+  .contact h2 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .contact p {
+    color: var(--ink-soft);
+    font-size: 17px;
+    margin-bottom: 36px;
+  }
+  .contact-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .contact-links a:hover { color: var(--clay); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 26px 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero-rail {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 24px;
+      flex-direction: row;
+      gap: 40px;
+    }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-col:first-child { border-right: none; border-bottom: 1px solid var(--line); padding-bottom: 36px; margin-bottom: 36px; }
+    .lanes { grid-template-columns: 1fr; gap: 40px; }
+    .about .wrap { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">MAHAR <span>GM</span></a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#stack">Stack</a>
+    </div>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow mono">Frontend Developer · Shopify Expert</div>
+      <h1>
+        <span class="name">Mahar GM</span>
+        I build Shopify stores that convert, and websites that perform.
+      </h1>
+      <p class="lede">
+        Frontend and Shopify developer based in Lahore, Pakistan. I help brands launch and scale Shopify stores, and build fast, modern websites for businesses that need more than a template.
+      </p>
+      <div class="hero-ctas">
+        <a href="#shopify-work" class="btn btn-primary">View Shopify Work →</a>
+        <a href="#web-work" class="btn btn-ghost">View Web Work →</a>
+        <a href="#contact" class="btn btn-text">Let's Talk</a>
+      </div>
+    </div>
+    <div class="hero-rail">
+      <div class="rail-item">
+        <span class="mono">Discipline 01</span>
+        <span class="rail-tag">Shopify Dev</span>
+      </div>
+      <div class="rail-item">
+        <span class="mono">Discipline 02</span>
+        <span class="rail-tag">Website Dev</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="wrap">
+    <div class="services-grid">
+      <div class="service-col">
+        <span class="service-tag tag-shopify">Shopify Development</span>
+        <h3>Stores built to sell.</h3>
+        <p>Theme customization & OS 2.0 builds, checkout & payment gateway integration, store automation with Make.com, speed & conversion optimization, custom app development.</p>
+      </div>
+      <div class="service-col">
+        <span class="service-tag tag-web">Website Development</span>
+        <h3>Sites built to perform.</h3>
+        <p>Custom websites with React & TypeScript, landing pages built to convert, dashboards & internal tools, API integrations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected Work</h2>
+      <span class="mono">05 PROJECTS</span>
+    </div>
+
+    <div class="lanes">
+      <!-- SHOPIFY LANE -->
+      <div class="lane-shopify" id="shopify-work">
+        <div class="lane-label shopify">
+          <span class="dot"></span>
+          <span class="mono">Shopify Development</span>
+        </div>
+
+        <div class="card">
+          <div class="card-meta">Live brand · Production</div>
+          <h4>Imrozia Serene — Shopify Storefront &amp; Automation</h4>
+          <p>Theme customization, COD order automation via Make.com, payment gateway fixes (Safepay/Payfy), email automation, and dynamic shipping rate tooling for a brand shipping real orders, not a demo store.</p>
+          <div class="pills">
+            <span class="pill">Shopify Liquid</span>
+            <span class="pill">Make.com</span>
+            <span class="pill">REST APIs</span>
+            <span class="pill">Payment Gateways</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-meta">Self-built product · Gumroad</div>
+          <h4>MAEVEN — Shopify OS 2.0 Theme</h4>
+          <p>A complete Shopify OS 2.0 theme built from scratch — 35+ custom sections, vanilla JS, mobile-first. Built to be sold, not just to demo skills.</p>
+          <div class="pills">
+            <span class="pill">Shopify OS 2.0</span>
+            <span class="pill">Vanilla JS</span>
+            <span class="pill">Liquid</span>
+          </div>
+          <a href="#" class="card-link">View on Gumroad →</a>
+        </div>
+      </div>
+
+      <!-- WEBSITE LANE -->
+      <div class="lane-web" id="web-work">
+        <div class="lane-label web">
+          <span class="dot"></span>
+          <span class="mono">Website Development</span>
+        </div>
+
+        <div class="card">
+          <div class="card-meta">Web platform · Full-stack</div>
+          <h4>EzzCode — Tech Training &amp; Internship Platform</h4>
+          <p>A platform built to take beginners through structured tech training, verifiable certificates, and real-world project experience with mentorship. Built end-to-end — frontend, auth, and data layer.</p>
+          <div class="pills">
+            <span class="pill">React</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">Vite</span>
+            <span class="pill">Supabase</span>
+            <span class="pill">PostgreSQL</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-meta">Business website</div>
+          <h4>IndexWise Research — Academic Research Services Site</h4>
+          <p>A responsive site for an English Literature academic research service — built utility-first with Tailwind, custom branding on top, structured for static deployment and fast load times.</p>
+          <div class="pills">
+            <span class="pill">React</span>
+            <span class="pill">Tailwind CSS</span>
+            <span class="pill">Static Deployment</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-meta">Client project</div>
+          <h4>Aliyan's Portfolio — Client Portfolio Website</h4>
+          <p>A personal portfolio site built for a client to showcase their professional work and skills.</p>
+          <div class="pills">
+            <span class="pill">React.js</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">Bootstrap</span>
+            <span class="pill">Tailwind CSS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>About</h2>
+    <div class="about-body">
+      <p>I'm a <strong>Computer Science student at the University of Lahore</strong> (4th semester) and a working frontend/Shopify developer. I split my time between client work — building and maintaining storefronts like <strong>Imrozia Serene</strong> — and my own products, like <strong>MAEVEN</strong> and <strong>ProposalCraft</strong>.</p>
+      <p>I care about shipping things that work in production, not just things that look good in a portfolio.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stack" id="stack">
+  <div class="wrap">
+    <span class="mono label">Stack</span>
+    <div class="stack-items">
+      <span class="stack-item">React.js</span>
+      <span class="stack-item">TypeScript</span>
+      <span class="stack-item">JavaScript</span>
+      <span class="stack-item">Tailwind CSS</span>
+      <span class="stack-item">Shopify Liquid / CLI</span>
+      <span class="stack-item">Make.com</span>
+      <span class="stack-item">REST APIs</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let's build something — Shopify store or website.</h2>
+    <p>Open for freelance work. Reach out on Upwork or drop me an email.</p>
+    <div class="contact-ctas">
+      <a href="#" class="btn btn-primary">Email Me</a>
+      <a href="#" class="btn btn-ghost">View on Upwork</a>
+    </div>
+    <div class="contact-links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Upwork</a>
+    </div>
+  </div>
+</section>
+
+<footer class="mono">
+  © 2026 MAHAR GM — BUILT WITH REACT &amp; CARE
+</footer>
+
+</body>
+</html>
