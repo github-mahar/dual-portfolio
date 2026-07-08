@@ -1,12 +1,10 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.ezzcode.portfolio",
-      "sha256_cert_fingerprints": [
-        "__PASTE_YOUR_SHA256_FINGERPRINT_HERE__"
-      ]
-    }
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "online.ezzcode.my_portfolio.twa",
+    "sha256_cert_fingerprints": [
+      "BC:B0:1A:FF:BA:63:9C:9F:BA:1D:EE:17:DA:06:60:9A:95:4E:E2:69:AA:50:DD:D6:72:6C:BE:21:98:C3:87:5C"
+    ]
   }
-]
+}]
